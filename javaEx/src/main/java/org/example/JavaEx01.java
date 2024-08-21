@@ -32,5 +32,26 @@ public class JavaEx01 {
         } else {
             System.out.println(number + " is odd");
         }
+
+        if (number < 10) {
+            System.out.println(number + " 은 한자리 ");
+        } else if (number < 100) {
+            System.out.println(number + " 은 두자리 ");
+        } else if (number < 1000) {
+            System.out.println(number + " 은 세자리 ");
+        }
+
+        switch (number) {
+            case 1:
+                System.out.println("일");
+                break;
+            case 2:
+                System.out.println("이");
+                System.out.println("둘");
+                break;
+            default:
+                System.out.println("아무것도 아님");
+                break;
+        }
     }
 }
