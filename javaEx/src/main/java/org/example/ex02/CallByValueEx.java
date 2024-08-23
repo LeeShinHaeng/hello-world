@@ -1,4 +1,4 @@
-package org.example.ex01;
+package org.example.ex02;
 
 public class CallByValueEx {
     public static void main(String[] args) {
