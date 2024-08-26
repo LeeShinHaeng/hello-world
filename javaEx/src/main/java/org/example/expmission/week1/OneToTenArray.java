@@ -1,4 +1,4 @@
-package org.example.expmission;
+package org.example.expmission.week1;
 
 public class OneToTenArray {
     public static void main(String[] args) {

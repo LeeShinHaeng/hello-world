@@ -1,4 +1,4 @@
-package org.example.expmission;
+package org.example.expmission.week1;
 
 import java.util.Scanner;
 
