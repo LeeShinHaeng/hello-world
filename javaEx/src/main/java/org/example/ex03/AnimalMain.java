@@ -24,5 +24,12 @@ public class AnimalMain {
         ap.sound();
         ap = new Animal();
         ap.sound();
+
+        System.out.println("-----");
+        ap = new Dog();
+        ap.animalMethod();
+//        ap.dogMethod(); (사용 불가)
+        Dog d = (Dog) ap;
+        d.dogMethod();  // 형 변환 이후 사용 가능
     }
 }
