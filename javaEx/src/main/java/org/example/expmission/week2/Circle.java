@@ -1,6 +1,6 @@
 package org.example.expmission.week2;
 
-public class Circle implements IShape{
+public class Circle extends AbstractShape {
     private int radius;
 
     public Circle(int radius) {
@@ -9,6 +9,8 @@ public class Circle implements IShape{
 
     @Override
     public void showArea() {
-        System.out.println("원의 넓이: "+ Math.PI * radius * radius);
+        System.out.println("원의 넓이: "
+                + Math.PI
+                * radius * radius);
     }
 }

@@ -1,6 +1,6 @@
 package org.example.expmission.week2;
 
-public class Triangle implements IShape {
+public class Triangle extends AbstractShape {
     private int width;
     private int height;
 
@@ -11,6 +11,8 @@ public class Triangle implements IShape {
 
     @Override
     public void showArea() {
-        System.out.println("삼각형의 넓이: " + (double) (width * height) / 2);
+        System.out.println("삼각형의 넓이: "
+                + (double) (width * height)
+                / 2);
     }
 }

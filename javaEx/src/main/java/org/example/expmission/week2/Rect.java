@@ -1,6 +1,6 @@
 package org.example.expmission.week2;
 
-public class Rect implements IShape {
+public class Rect extends AbstractShape {
     private int width;
     private int height;
 
@@ -11,6 +11,7 @@ public class Rect implements IShape {
 
     @Override
     public void showArea() {
-        System.out.println("사각형의 넓이: " + width * height);
+        System.out.println("사각형의 넓이: "
+                + width * height);
     }
 }
