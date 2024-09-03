@@ -6,12 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    ArrayList<User> users = new ArrayList<>();
 
     // http://localhost:8080/user/signup
     @GetMapping("/signup")
@@ -25,7 +22,6 @@ public class UserController {
     @ResponseBody
     public String signup(@ModelAttribute User user) {
         System.out.println(user);
-        users.add(user);
         return "success";
     }
 
@@ -44,13 +40,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    @ResponseBody
-    public String login(@ModelAttribute Login login) {
-        for (User user : users) {
-            if(user.getName().equals(login.getName()) && user.getPassword().equals(login.getPassword())) {
-                return "success";
-            }
+    public String login(@ModelAttribute Login login,
+                        Model model) {
+        User user = new User();
+        if (login.getName().equals(user.getName()) && login.getPassword().equals(user.getPassword())) {
+            model.addAttribute("id", user.getName());
+            return "loginSuccess";
         }
-        return "failed";
+
+        return "redirect:/user/login";
     }
 }
