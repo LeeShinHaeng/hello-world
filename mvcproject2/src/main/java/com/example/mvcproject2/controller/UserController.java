@@ -17,11 +17,18 @@ public class UserController {
         return "signup";
     }
 
-    // http://localhost:8080/user/signup
     @PostMapping("/signup")
     @ResponseBody
     public String signup(@ModelAttribute User user) {
         System.out.println(user);
         return "success";
     }
+
+
+//    @PostMapping("/signup")
+//    public String signup(@ModelAttribute User user) {
+//        System.out.println(user);
+//        return "redirect:/";
+//    }
+
 }

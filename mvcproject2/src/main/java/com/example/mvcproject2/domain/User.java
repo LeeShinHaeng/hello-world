@@ -5,7 +5,7 @@ public class User {
     private String name;
     private String password;
     private String email;
-    private int age;
+    private Integer age;
 
     public int getId() {
         return id;
@@ -39,7 +39,7 @@ public class User {
         this.email = email;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
