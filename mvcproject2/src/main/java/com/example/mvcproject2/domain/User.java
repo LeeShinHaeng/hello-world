@@ -7,6 +7,11 @@ public class User {
     private String email;
     private Integer age;
 
+    public User() {
+        this.name = "홍길동";
+        this.password = "1111";
+    }
+
     public int getId() {
         return id;
     }
