@@ -51,6 +51,12 @@ public class RestExController {
         return "Request Body " + user;
     }
 
+    // http://localhost:8080/item?id=1
+    @GetMapping("/item")
+    public ItemDto getItem(@RequestParam String id) {
+        return restExService.getItemById(id);
+    }
+
 
     // http://localhost:8080/item
     @PostMapping("/item")
