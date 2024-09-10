@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/cats")
@@ -27,8 +26,14 @@ public class CatController {
     // http://localhost:8080/cats/1
     @GetMapping("/{id}")
     public Cat getCatById(@PathVariable Long id) {
-        Optional<Cat> cat = catList.stream().filter(c -> c.getId().equals(id)).findFirst();
-        return cat.orElse(null);
+//        Optional<Cat> cat = catList.stream().filter(c -> c.getId().equals(id)).findFirst();
+//        return cat.orElse(null);
+        for (Cat cat : catList) {
+            if (cat.getId().equals(id)) {
+                return cat;
+            }
+        }
+        return null;
     }
 
     // http://localhost:8080/cats/add
@@ -42,8 +47,14 @@ public class CatController {
     // http://localhost:8080/cats/1
     @DeleteMapping("/{id}")
     public String deleteCat(@PathVariable Long id) {
-        boolean removed = catList.removeIf(c -> c.getId().equals(id));
-        return removed ? "삭제 완료" : "없는 고양이";
+//        boolean removed = catList.removeIf(c -> c.getId().equals(id));
+//        return removed ? "삭제 완료" : "없는 고양이";
+        for (int i = 0; i < catList.size(); i++) {
+            if (catList.get(i).getId().equals(id)) {
+                catList.remove(i);
+                return "삭제 완료";
+            }
+        }
+        return "없는 고양이";
     }
-
 }
