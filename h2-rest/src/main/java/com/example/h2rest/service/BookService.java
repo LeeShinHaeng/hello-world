@@ -23,4 +23,25 @@ public class BookService {
             return null;
         }
     }
+
+    public Book createBook(Book book) {
+        bookMapper.save(book);
+        return book;
+    }
+
+    public Book updateBook(Long id, Book book) {
+        Book foundBook = findBooksById(id);
+
+        foundBook.setPublishedDate(book.getPublishedDate());
+        foundBook.setAuthor(book.getAuthor());
+        foundBook.setTitle(book.getTitle());
+        foundBook.setPublisher(book.getPublisher());
+        bookMapper.update(foundBook);
+
+        return foundBook;
+    }
+
+    public void deleteBook(Long id) {
+        bookMapper.deleteById(id);
+    }
 }

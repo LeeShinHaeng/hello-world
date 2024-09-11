@@ -3,6 +3,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.h2rest.mapper.BookMapper">
+    <insert id="save" parameterType="com.example.h2rest.model.Book">
+        INSERT INTO BOOK (TITLE, AUTHOR, PUBLISHED_DATE, PUBLISHER)
+        VALUES (#{title}, #{author}, #{publishedDate}, #{publisher})
+    </insert>
+
+    <update id="update" parameterType="com.example.h2rest.model.Book">
+        UPDATE BOOK
+        SET TITLE = #{title}, AUTHOR = #{author}, PUBLISHED_DATE = #{publishedDate}, PUBLISHER = #{publisher}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="long">
+        DELETE
+        FROM BOOK
+        WHERE ID = #{id}
+    </delete>
 
     <select id="findById" parameterType="long" resultType="com.example.h2rest.model.Book">
         SELECT ID, TITLE, AUTHOR, PUBLISHED_DATE, PUBLISHER

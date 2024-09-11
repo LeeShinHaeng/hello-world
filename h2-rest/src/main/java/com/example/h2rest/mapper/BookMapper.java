@@ -10,4 +10,10 @@ public interface BookMapper {
     ArrayList<Book> findAll();
 
     Book findById(Long id);
+
+    void save(Book book);
+
+    void update(Book book);
+
+    void deleteById(Long id);
 }

@@ -1,6 +1,5 @@
 package com.example.h2rest.model;
 
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +12,6 @@ import java.time.LocalDate;
 @Builder
 public class Book {
     @Id
-    @GeneratedValue
     private Long id;
     private String title;
     private String author;
