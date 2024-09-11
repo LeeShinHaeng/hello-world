@@ -29,6 +29,8 @@ dependencies {
     implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.3.0'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.hibernate.orm:hibernate-core:6.5.2.Final'
 }
 
 tasks.named('test') {
