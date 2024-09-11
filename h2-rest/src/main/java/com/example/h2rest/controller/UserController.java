@@ -1,47 +1,32 @@
 package com.example.h2rest.controller;
 
-import com.example.h2rest.model.User;
-import com.example.h2rest.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.h2rest.dto.UserDto;
+import com.example.h2rest.entity.User;
+import com.example.h2rest.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserService userService;
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @PostMapping("/add")
-    public User addUser(@RequestBody User user) {
-        return userRepository.save(user);
+    @PostMapping
+    public User create(@RequestBody UserDto userDto) {
+        return userService.createUser(userDto);
     }
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
-        return userRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("User not found")
-        );
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
+        return userService.getUserById(id);
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User userDetails) {
-        User user = userRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("User not found")
-        );
-        user.setName(userDetails.getName());
-        user.setEmail(userDetails.getEmail());
-        return userRepository.save(user);
+    public User update(@PathVariable Long id,
+                       @RequestBody UserDto userDto) {
+        return userService.updateUser(id, userDto);
     }
 }

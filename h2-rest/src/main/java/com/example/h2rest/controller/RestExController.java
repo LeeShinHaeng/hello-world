@@ -1,7 +1,7 @@
 package com.example.h2rest.controller;
 
 import com.example.h2rest.dto.ItemDto;
-import com.example.h2rest.dto.LombokUser;
+import com.example.h2rest.dto.UserDto;
 import com.example.h2rest.dto.ResponseItemDto;
 import com.example.h2rest.service.RestExService;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +46,7 @@ public class RestExController {
 
     // http://localhost:8080/body
     @PostMapping("/body")
-    public String testRequestBody(@RequestBody LombokUser user) {
+    public String testRequestBody(@RequestBody UserDto user) {
         log.info("RequestBody {}", user);
         return "Request Body " + user;
     }

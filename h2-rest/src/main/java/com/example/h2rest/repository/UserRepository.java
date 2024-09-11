@@ -1,6 +1,6 @@
 package com.example.h2rest.repository;
 
-import com.example.h2rest.model.User;
+import com.example.h2rest.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
