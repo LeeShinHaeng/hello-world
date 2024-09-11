@@ -16,6 +16,12 @@ public class RestExService {
 
     public boolean registerItem(ItemDto itemDto) {
         // DB에 저장
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", itemDto.getId());
+        paramMap.put("name", itemDto.getName());
+
+        exMapper.registerItem(paramMap);
+
         log.info("service: register ...");
         return true;
     }
