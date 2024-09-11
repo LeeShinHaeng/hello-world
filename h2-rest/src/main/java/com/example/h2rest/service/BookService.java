@@ -1,7 +1,7 @@
 package com.example.h2rest.service;
 
-import com.example.h2rest.mapper.BookMapper;
-import com.example.h2rest.model.Book;
+import com.example.h2rest.entity.BookEntity;
+import com.example.h2rest.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,38 +10,37 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BookService {
-    private final BookMapper bookMapper;
+    private final BookRepository bookRepository;
 
-    public List<Book> findAllBooks() {
-        return bookMapper.findAll();
+    public List<BookEntity> findAllBooks() {
+        return bookRepository.findAll();
     }
 
-    public Book findBooksById(Long id) {
+    public BookEntity findBooksById(Long id) {
         try {
-            return bookMapper.findById(id);
+            return bookRepository.findById(id).orElse(null);
         } catch (Exception e) {
             return null;
         }
     }
 
-    public Book createBook(Book book) {
-        bookMapper.save(book);
-        return book;
+    public BookEntity createBook(BookEntity bookEntity) {
+        return bookRepository.save(bookEntity);
     }
 
-    public Book updateBook(Long id, Book book) {
-        Book foundBook = findBooksById(id);
+    public BookEntity updateBook(Long id, BookEntity bookEntity) {
+        BookEntity foundBook = findBooksById(id);
 
-        foundBook.setPublishedDate(book.getPublishedDate());
-        foundBook.setAuthor(book.getAuthor());
-        foundBook.setTitle(book.getTitle());
-        foundBook.setPublisher(book.getPublisher());
-        bookMapper.update(foundBook);
+        foundBook.setPublishedDate(bookEntity.getPublishedDate());
+        foundBook.setAuthor(bookEntity.getAuthor());
+        foundBook.setTitle(bookEntity.getTitle());
+        foundBook.setPublisher(bookEntity.getPublisher());
+        bookRepository.save(foundBook);
 
         return foundBook;
     }
 
     public void deleteBook(Long id) {
-        bookMapper.deleteById(id);
+        bookRepository.deleteById(id);
     }
 }

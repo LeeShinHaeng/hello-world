@@ -1,6 +1,6 @@
 package com.example.h2rest.controller;
 
-import com.example.h2rest.model.Book;
+import com.example.h2rest.entity.BookEntity;
 import com.example.h2rest.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,25 +15,25 @@ public class BookController {
 
     //  http://localhost:8080/books
     @GetMapping
-    public List<Book> getAllBooks() {
+    public List<BookEntity> getAllBooks() {
         return bookService.findAllBooks();
     }
 
     // http://localhost:8080/books/1
     @GetMapping("/{id}")
-    public Book getBooksById(@PathVariable Long id) {
+    public BookEntity getBooksById(@PathVariable Long id) {
         return bookService.findBooksById(id);
     }
 
     // http://localhost:8080/books
     @PostMapping
-    public Book createBook(@RequestBody Book book) {
+    public BookEntity createBook(@RequestBody BookEntity book) {
         return bookService.createBook(book);
     }
 
     // http://localhost:8080/books/1
     @PutMapping("/{id}")
-    public Book updateBook(@PathVariable Long id, @RequestBody Book book) {
+    public BookEntity updateBook(@PathVariable Long id, @RequestBody BookEntity book) {
         return bookService.updateBook(id, book);
     }
 
