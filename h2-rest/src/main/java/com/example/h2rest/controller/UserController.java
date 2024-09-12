@@ -6,8 +6,6 @@ import com.example.h2rest.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -15,9 +13,11 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public User create(@RequestBody UserDto userDto) {
-        return userService.createUser(userDto);
+    public User create(@RequestBody UserDto userDto) throws Exception {
+//        return userService.createUser(userDto);
+        return userService.createUserWithRollback(userDto);
     }
+
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {

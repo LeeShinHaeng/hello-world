@@ -23,6 +23,22 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    // rollback example
+    @Transactional(rollbackFor = Exception.class)
+    public User createUserWithRollback(UserDto userDto) throws Exception {
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        userRepository.save(user);
+
+        // 예외 발생
+        if (userDto.getEmail().contains("error")) {
+            throw new Exception("강제 예외 발생");
+        }
+
+        return user;
+    }
+
     @Transactional(readOnly = true)
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
