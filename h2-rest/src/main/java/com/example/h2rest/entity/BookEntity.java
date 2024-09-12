@@ -1,17 +1,17 @@
-package com.example.h2rest.model;
+package com.example.h2rest.entity;
 
-import jakarta.persistence.Id;
-import lombok.Builder;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
-@Builder
-public class Book {
+@Entity
+@Table(name = "book")
+@Getter @Setter
+public class BookEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String author;
