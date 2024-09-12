@@ -14,8 +14,8 @@ public class UserController {
 
     @PostMapping
     public User create(@RequestBody UserDto userDto) throws Exception {
-//        return userService.createUser(userDto);
-        return userService.createUserWithRollback(userDto);
+        return userService.createUser(userDto);
+//        return userService.createUserWithRollback(userDto);
     }
 
 
