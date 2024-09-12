@@ -56,5 +56,29 @@ public class UserControllerTest {
         assertThat(response.getBody().getEmail()).isEqualTo(userDto.getEmail());
     }
 
+    // exp mission
+    // 사용자 조회 API 테스트
+    // : DB에 미리 저장한 사용자를 조회하는 APi를 호출하고, 검증
+    @Test
+    public void testGetUserById() throws Exception{
+        // 사용자 저장
+        System.out.println("[테스트] 새로운 사용자 John 생성");
+        User user = new User();
+        user.setEmail("john@gmail.com");
+        user.setName("John");
+        userRepository.save(user);
 
+        // 사용자 조회
+        System.out.println("[테스트] /user/{id} 경로로 GET 요청 보내기");
+        ResponseEntity<User> response = restTemplate.getForEntity(
+                "/user/"+user.getId(),
+                User.class);
+
+        // 검증
+        System.out.println("[검증] 응답 상태 코드 : " + response.getStatusCode());
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getName()).isEqualTo(user.getName());
+        assertThat(response.getBody().getEmail()).isEqualTo(user.getEmail());
+    }
 }
