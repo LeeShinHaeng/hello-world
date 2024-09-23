@@ -23,11 +23,7 @@ public class PostController {
     public String list(Model model) {
         List<PostDto> postDtos = postService.getAllPosts();
         model.addAttribute("posts", postDtos);
-
-        // 별명 추가
-        Authentication authentication = SecurityContextHolder
-                .getContext().getAuthentication();
-        User user = (User) authentication.getPrincipal();
+        User user = getLoginUser();
         model.addAttribute("nickname", user.getNickname());
 
         return "list";
@@ -37,6 +33,9 @@ public class PostController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("post", new PostDto());
+        User user = getLoginUser();
+        model.addAttribute("nickname", user.getNickname());
+
         return "create";
     }
 
@@ -61,6 +60,9 @@ public class PostController {
                 () -> new RuntimeException("Post not found")
         );
         model.addAttribute("post", postDto);
+        User user = getLoginUser();
+        model.addAttribute("nickname", user.getNickname());
+
         return "edit";
     }
 
@@ -74,6 +76,12 @@ public class PostController {
     public String delete(@PathVariable Long id) {
         postService.deletePost(id);
         return "redirect:/posts";
+    }
+
+    private static User getLoginUser() {
+        Authentication authentication = SecurityContextHolder
+                .getContext().getAuthentication();
+        return (User) authentication.getPrincipal();
     }
 
 }
