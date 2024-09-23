@@ -1,8 +1,11 @@
 package com.example.mywebservice.controller;
 
 import com.example.mywebservice.dto.PostDto;
+import com.example.mywebservice.entity.User;
 import com.example.mywebservice.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +23,13 @@ public class PostController {
     public String list(Model model) {
         List<PostDto> postDtos = postService.getAllPosts();
         model.addAttribute("posts", postDtos);
+
+        // 별명 추가
+        Authentication authentication = SecurityContextHolder
+                .getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("nickname", user.getNickname());
+
         return "list";
     }
 
