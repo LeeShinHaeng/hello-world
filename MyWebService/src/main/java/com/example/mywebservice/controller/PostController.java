@@ -51,6 +51,14 @@ public class PostController {
                 () -> new RuntimeException("Post not found")
         );
         model.addAttribute("post", postDto);
+
+        User user = getLoginUser();
+        if(user.getNickname().equals(postDto.getAuthor())) {
+            model.addAttribute("isAuthor", true);
+        } else {
+            model.addAttribute("isAuthor", false);
+        }
+
         return "detail";
     }
 
