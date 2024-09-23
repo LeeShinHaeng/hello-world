@@ -1,8 +1,11 @@
 package com.example.mywebservice.controller;
 
 import com.example.mywebservice.dto.PostDto;
+import com.example.mywebservice.entity.User;
 import com.example.mywebservice.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +23,9 @@ public class PostController {
     public String list(Model model) {
         List<PostDto> postDtos = postService.getAllPosts();
         model.addAttribute("posts", postDtos);
+        User user = getLoginUser();
+        model.addAttribute("nickname", user.getNickname());
+
         return "list";
     }
 
@@ -27,6 +33,9 @@ public class PostController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("post", new PostDto());
+        User user = getLoginUser();
+        model.addAttribute("nickname", user.getNickname());
+
         return "create";
     }
 
@@ -42,6 +51,14 @@ public class PostController {
                 () -> new RuntimeException("Post not found")
         );
         model.addAttribute("post", postDto);
+
+        User user = getLoginUser();
+        if(user.getNickname().equals(postDto.getAuthor())) {
+            model.addAttribute("isAuthor", true);
+        } else {
+            model.addAttribute("isAuthor", false);
+        }
+
         return "detail";
     }
 
@@ -51,6 +68,9 @@ public class PostController {
                 () -> new RuntimeException("Post not found")
         );
         model.addAttribute("post", postDto);
+        User user = getLoginUser();
+        model.addAttribute("nickname", user.getNickname());
+
         return "edit";
     }
 
@@ -64,6 +84,12 @@ public class PostController {
     public String delete(@PathVariable Long id) {
         postService.deletePost(id);
         return "redirect:/posts";
+    }
+
+    private static User getLoginUser() {
+        Authentication authentication = SecurityContextHolder
+                .getContext().getAuthentication();
+        return (User) authentication.getPrincipal();
     }
 
 }
