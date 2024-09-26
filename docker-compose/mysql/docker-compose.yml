@@ -14,7 +14,7 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_DATABASE=mydb
-      - MYSQL_ROOT_PASSWORD=root1234!@
+      - MYSQL_ROOT_PASSWORD=1234
       - TZ=Asia/Seoul
     volumes:
       - /Users/snhng/goormthon/MYSQL
