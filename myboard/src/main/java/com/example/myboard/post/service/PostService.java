@@ -4,6 +4,9 @@ import com.example.myboard.post.db.PostEntity;
 import com.example.myboard.post.db.PostRepository;
 import com.example.myboard.post.model.PostRequest;
 import com.example.myboard.post.model.PostResponse;
+import com.example.myboard.post.model.PostViewRequest;
+import com.example.myboard.post.model.PostViewResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +34,33 @@ public class PostService {
         return PostResponse.builder()
                 .id(saved.getId())
                 .status(saved.getStatus())
+                .build();
+    }
+
+    public PostViewResponse view(@Valid PostViewRequest postViewRequest) {
+        var foundPost = postRepository.findById(postViewRequest.getPostId())
+                .map(it -> {
+                            if (!it.getPassword().equals(postViewRequest.getPassword())) {
+                                var format = "Password does not match %s vs %s";
+                                throw new RuntimeException(
+                                        String.format(format,
+                                                it.getPassword(),
+                                                postViewRequest.getPassword()
+                                        )
+                                );
+                            }
+                            return it;
+                        }
+                )
+                .orElseThrow(() -> new RuntimeException("Post Not Found"));
+
+        return PostViewResponse.builder()
+                .id(foundPost.getId())
+                .userName(foundPost.getUserName())
+                .email(foundPost.getEmail())
+                .title(foundPost.getTitle())
+                .content(foundPost.getContent())
+                .postedAt(foundPost.getPostedAt())
                 .build();
     }
 }
