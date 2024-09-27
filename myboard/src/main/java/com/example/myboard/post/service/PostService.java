@@ -7,6 +7,8 @@ import com.example.myboard.post.model.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -21,6 +23,7 @@ public class PostService {
                 .status("REGISTERED")
                 .title(postRequest.getTitle())
                 .content(postRequest.getContent())
+                .postedAt(LocalDateTime.now())
                 .build();
 
         var saved = postRepository.save(entity);
