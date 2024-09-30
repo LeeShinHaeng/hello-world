@@ -9,8 +9,10 @@ import com.example.myboard.post.model.PostViewResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +40,9 @@ public class PostService {
     }
 
     public PostViewResponse view(@Valid PostViewRequest postViewRequest) {
-        var foundPost = postRepository.findById(postViewRequest.getPostId())
+        var foundPost = postRepository.findFirstByIdAndStatusOrderByIdDesc(
+                        postViewRequest.getPostId(),
+                        "REGISTERED")
                 .map(it -> {
                             if (!it.getPassword().equals(postViewRequest.getPassword())) {
                                 var format = "Password does not match %s vs %s";
@@ -62,5 +66,41 @@ public class PostService {
                 .content(foundPost.getContent())
                 .postedAt(foundPost.getPostedAt())
                 .build();
+    }
+
+    public List<PostViewResponse> all() {
+        return postRepository.findAllByStatusOrderByIdDesc("REGISTERED")
+                .stream()
+                .map(post -> PostViewResponse.builder()
+                        .id(post.getId())
+                        .userName(post.getUserName())
+                        .email(post.getEmail())
+                        .title(post.getTitle())
+                        .content(post.getContent())
+                        .postedAt(post.getPostedAt())
+                        .build()
+                ).toList();
+    }
+
+    @Transactional
+    public void delete(@Valid PostViewRequest postViewRequest) {
+        postRepository.findById(postViewRequest.getPostId())
+                .map(it -> {
+                            if (!it.getPassword().equals(postViewRequest.getPassword())) {
+                                var format = "Password does not match %s vs %s";
+                                throw new RuntimeException(
+                                        String.format(format,
+                                                it.getPassword(),
+                                                postViewRequest.getPassword()
+                                        )
+                                );
+                            }
+                            it.setStatus("UNREGISTERED");
+                            return it;
+                        }
+                )
+                .orElseThrow(
+                        () -> new RuntimeException("Post Not Found : " + postViewRequest.getPostId())
+                );
     }
 }
