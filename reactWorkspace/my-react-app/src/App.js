@@ -1,11 +1,11 @@
 import React from 'react';
-import RandomNumber from './components/RandomNumber';
+import InputCompare from './components/InputCompare';
 import './App.css'; 
 
 function App() {
   return (
     <div>
-      <RandomNumber />
+      <InputCompare />
     </div>
   );
 }
