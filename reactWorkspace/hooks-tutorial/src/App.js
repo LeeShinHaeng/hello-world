@@ -1,16 +1,18 @@
-import './App.css';
-import Counter from './components/Counter';
-import Info from './components/Info';
-import Average from './components/Average';
+import "./App.css";
+import Counter from "./components/Counter";
+import Info from "./components/Info";
+import Average from "./components/Average";
+import FormHandler from "./components/FormHandler";
 
 function App() {
   return (
     <div className="App">
-      <Average />
+      {/* <Average />
       <hr></hr>
         <Counter />
         <hr></hr>
-        <Info />
+        <Info /> */}
+      <FormHandler />
     </div>
   );
 }
