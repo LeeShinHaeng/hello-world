@@ -16,7 +16,20 @@ function increase(number, callback) {
 async function runtask() {
   try {
     let result = await increase(0);
+    console.log(result);
+    result = await increase(result);
+    console.log(result);
+    result = await increase(result);
+    console.log(result);
+    result = await increase(result);
+    console.log(result);
+    result = await increase(result);
+    console.log(result);
+    result = await increase(result);
+    console.log(result);
   } catch (e) {
     console.log(e);
   }
 }
+
+runtask();
